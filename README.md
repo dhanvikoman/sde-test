@@ -77,7 +77,9 @@ To convert your difference to **basis points**, just scale your spread by 100 an
 
 The code written reads the json file from the parser argument that is passed while executing the command line. For executing here, I have used the sample_input.json file and thus the docker file has the same as the input. The script is a simple read and transform and write operation that gets the required values and then gives the output file. The time complexity in this case is O(N) because I am using a for loop to iterate through one dataframe i.e. it is of linear time complexity that depends on the number of corporate types that are there. 
 The code is written in python and can be executed from the command line using the simple command which is:
-$ python sde-test-solution.py sample_input.json output_file.json
+
+`$ python sde-test-solution.py sample_input.json output_file.json`
+
 The main logic that I used was to separate the corporate and government bonds and then compare the closeness of each corporate to each government bond and then get the smallest difference to determine the closeness of the two. Once the pairs have been identified, the yield is calculated and then the values are saved.
 The output json is in the tabular schema that has the data portion represented as shown by the output.
 
