@@ -75,63 +75,10 @@ To convert your difference to **basis points**, just scale your spread by 100 an
 
 ### Explanation
 
-Each output object in the list represents a pairing of one corporate bond to its closest government bond benchmark, and the spread between their yields.
+The code written reads the json file from the parser argument that is passed while executing the command line. For executing here, I have used the sample_input.json file and thus the docker file has the same as the input. The script is a simple read and transform and write operation that gets the required values and then gives the output file. The time complexity in this case is O(N) because I am using a for loop to iterate through one dataframe i.e. it is of linear time complexity that depends on the number of corporate types that are there. 
+The code is written in python and can be executed from the command line using the simple command which is:
+$ python sde-test-solution.py sample_input.json output_file.json
+The main logic that I used was to separate the corporate and government bonds and then compare the closeness of each corporate to each government bond and then get the smallest difference to determine the closeness of the two. Once the pairs have been identified, the yield is calculated and then the values are saved.
+The output json is in the tabular schema that has the data portion represented as shown by the output.
 
-The best benchmark for bond `c1` is `g1`, since the absolute difference in their terms (|10.3 - 9.4|) is only 0.9, but comparing `c1`and `g2` gets you 1.7. The spread is calculated as simply the corporate yield - government yield, you would obtain 5.30 - 3.70 = 1.60, which you must represent in basis points as "160 bps".
 
-The bond `c2` is not included in the output because it is missing a property, `yield`. If *any* properties are missing from a bond object, *do not include it in the calculation and output*. You may assume you will always have at least one valid government bond and at least one valid corporate bond, for all inputs.
-
-## Command-line interface
-
-To make this challenge easier to work on, and easier for us to evaluate, you must implement a specific command-line interface for your program, *regardless of which language you use*. For example, let the name of your executable be `sde-test-solution`, then your program should accept and use the following arguments only.
-
-`$ sde-test-solution input_file.json output_file.json `
-
-The **first argument** will be the path to the input JSON file (has the input bond data), formatted as the example above. Your program must read the JSON file at this path and process it.
-
-The **second argument** will be the path where your program must write the output of your program, as a JSON file, formatted as the example above.
-
-You may assume that both arguments will always be provided during our testing, and that the paths will always be valid.
-
-## Input file format
-
-See `sample_input.json`, or example above. You may assume that all properties or fields will be present and valid.
-
-## Output file format
-
-See `sample_output.json`, or example above. You must follow the file structure exactly, and include all fields for each output object shown in the example.
-
-## Further requirements
-
-### Testing
-
-Code in production should be tested, as this guarantees expected behaviour and functionality, as well as  making it safer to modify implementations while knowing behaviour remains the same. Do your best to **write some insightful automated tests** for your command-line program.
-
-### Documentation
-
-**Replace this README file with your own**. Write documentation on your submission such that someone can read it and immediately understand CLI arguments, inputs and outputs, behaviours, and reasoning behind design decisions that went into your solution, and any trade-offs. Discuss the run time complexity of your main calculation.
-
-### Docker
-
-To help make assessment easier, you should **create and fill out a working** `Dockerfile` in the directory of your solution, that will handle the building your final executable and its dependencies.
-
-Your final executable should be setup as an entrypoint so that we can automatically pass in the paths for your program to process input from and write output to.
-
-You must set your `WORKDIR` to be `/submission`, make sure to copy your files there, in your container. This is important because we will be setting up volumes on our end, and would like to reason about your file system.
-
-**Note:** If you cannot run/test your submission in Docker locally, please include a Dockerfile at least. If you do not know Docker, please list dependencies involved to develop and run your submission in your documentation.
-
-## Evaluation
-
-Upon receiving your submission, we will evaluate:
-
-- **Functionality**: does the Docker image build and execute? Does the program pass our automated test cases?
-- **Code style**: is the code organized well and easy to understand? Are there any smells or severe formatting issues? Is it efficient?
-- **Testing**: are there any automated tests written? Do they provide sufficient coverage?
-- **Documentation**: is a new README present? Is it clearly expressed and well written? Does it touch on all topics mentioned?
-
-## Submission
-
-Clone this repository and make commit the work to your own repo to share with us. If you decide to make the repo private, add @overbondeng as a collaborator, so that we can clone and view your solution.
-
-Alternatively, email us a zip file containing your entire solution.
